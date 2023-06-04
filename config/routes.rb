@@ -4,9 +4,17 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   namespace :api do
-    resources :attribute_mappings
-    resources :documents
-    resources :equivalents
+    resources :attribute_mappings 
+    resources :documents do
+      member do
+        get 'get_attributes'
+      end
+    end
+    resources :equivalents do 
+      member do
+        get 'get_attributes'
+      end
+    end
   end
 
 end

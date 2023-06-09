@@ -11,4 +11,7 @@ class Api::DocumentsController < ApiController
 		document = model_class.find(params[:id])
 		render json: extract_attribute_paths(document.json_data)
 	end
+	def create_params
+		params.require(:document).permit(:title, :description, json_data: {})
+	end
 end

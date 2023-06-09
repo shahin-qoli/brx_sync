@@ -23,6 +23,7 @@ class ApiController < ActionController::API
 
 	def create 
 		obj = model_class.new(create_params)
+		byebug
 		if obj.save
 			render json: obj, status:201
 		else

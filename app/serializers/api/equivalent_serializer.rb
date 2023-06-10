@@ -1,6 +1,6 @@
 module Api
     class EquivalentSerializer < ActiveModel::Serializer
 
-        attributes :id, :document, :json_data
+        attributes :id, :document,:title, :description, :json_data
     end
 end

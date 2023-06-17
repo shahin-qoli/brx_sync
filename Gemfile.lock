@@ -245,6 +245,13 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.6.3-x86_64-linux)
+    state_machines (0.5.0)
+    state_machines-activemodel (0.8.0)
+      activemodel (>= 5.1)
+      state_machines (>= 0.5.0)
+    state_machines-activerecord (0.8.0)
+      activerecord (>= 5.1)
+      state_machines-activemodel (>= 0.8.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.2.2)
@@ -300,6 +307,8 @@ DEPENDENCIES
   shoulda-matchers (~> 5.0)
   sprockets-rails
   sqlite3 (~> 1.4)
+  state_machines-activemodel
+  state_machines-activerecord
   stimulus-rails
   turbo-rails
   tzinfo-data

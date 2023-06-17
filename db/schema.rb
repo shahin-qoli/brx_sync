@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_110441) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_16_105612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,7 +61,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_110441) do
     t.bigint "equivalent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "raw_documents_request_id"
     t.index ["equivalent_id"], name: "index_raw_documents_on_equivalent_id"
+  end
+
+  create_table "raw_documents_requests", force: :cascade do |t|
+    t.bigint "equivalent_id"
+    t.jsonb "request_body"
+    t.string "request_link"
+    t.string "request_type"
+    t.string "request_docs_array"
+    t.boolean "is_success", default: false
+    t.jsonb "response"
+    t.string "jid"
+    t.integer "job_id"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equivalent_id"], name: "index_raw_documents_requests_on_equivalent_id"
   end
 
 end

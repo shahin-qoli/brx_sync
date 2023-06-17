@@ -1,6 +1,7 @@
 class RawDocument < ApplicationRecord
 	has_many :equivalentment_requests
 	belongs_to :equivalent
+	belongs_to :raw_documents_request
 	def self.new_job_id
 		if self.last.nil?	
 			1
@@ -8,6 +9,27 @@ class RawDocument < ApplicationRecord
 			self.last.job_id + 1
 		end
 	end
+
+	def create_equivalent
+		request_body = create_request_body
+		equivalent = self.equivalentment_requests.create(request_body: request_body)
+	end
+
+	def create_request_body
+		raw_attrbue_values = self.extract_attribute_paths
+		object_to_create = {}
+		raw_attrbue_values.each do |raw|
+			equivalent_mapping = self.equivalent.attribute_mappings.where(source_attribute: raw).last
+			if equivalent_mapping.fixed_amount.nil?
+				attribute_value = find_value(raw_data, equivalent_mapping.source_attribute)
+				object_to_create = {equivalent_mapping.equivalent_attribute: attribute_value}
+			else 
+				object_to_create = {equivalent_mapping.equivalent_attribute: equivalent_mapping.fixed_amount}
+			end
+		end
+		create_object(object_to_create)
+	end
+
 	def extract_attribute_paths(value = raw_data, parent_path = '')
 		attribute_paths = []
 
@@ -28,7 +50,7 @@ class RawDocument < ApplicationRecord
 		attribute_paths
 	end	
 
-	def something
+	def find_attribute_value
 		attribute_paths = self.equivalent.attribute_mappings.pluck(:source_attribute)
 		attribute_values = attribute_paths.map { |path| find_value(raw_data, path) }
 
@@ -37,7 +59,7 @@ class RawDocument < ApplicationRecord
 	end 
 	def find_value(data, path)
 	  keys = path.split('.')
-	  v = keys.inject(data) {|obj, part|  obj.is_a?(Hash) ? obj[part]: "its #{obj}"} 
+	  v = keys.inject(data) {|obj, part|  obj.is_a?(Hash) ? obj[part] : obj } 
 	end
 
 	def extract_attribute_values(json, attribute_path)

@@ -23,6 +23,9 @@ class ApiController < ActionController::API
 
 	def create 
 		obj = model_class.new(create_params)
+		puts create_params
+		puts "errrrooooos"
+		obj.errors
 		byebug
 		if obj.save
 			render json: obj, status:201

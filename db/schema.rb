@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_102133) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_16_105612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,12 +33,52 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_102133) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equivalentment_requests", force: :cascade do |t|
+    t.bigint "raw_document_id"
+    t.jsonb "request_body"
+    t.boolean "is_success"
+    t.jsonb "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["raw_document_id"], name: "index_equivalentment_requests_on_raw_document_id"
+  end
+
   create_table "equivalents", force: :cascade do |t|
     t.bigint "document_id"
     t.jsonb "json_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.string "description"
     t.index ["document_id"], name: "index_equivalents_on_document_id"
+  end
+
+  create_table "raw_documents", force: :cascade do |t|
+    t.jsonb "raw_data"
+    t.string "document_source"
+    t.integer "job_id"
+    t.boolean "is_synced", default: false
+    t.bigint "equivalent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "raw_documents_request_id"
+    t.index ["equivalent_id"], name: "index_raw_documents_on_equivalent_id"
+  end
+
+  create_table "raw_documents_requests", force: :cascade do |t|
+    t.bigint "equivalent_id"
+    t.jsonb "request_body"
+    t.string "request_link"
+    t.string "request_type"
+    t.string "request_docs_array"
+    t.boolean "is_success", default: false
+    t.jsonb "response"
+    t.string "jid"
+    t.integer "job_id"
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equivalent_id"], name: "index_raw_documents_requests_on_equivalent_id"
   end
 
 end

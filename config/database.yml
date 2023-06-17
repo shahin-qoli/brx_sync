@@ -7,23 +7,23 @@ default: &default
 development:
   <<: *default
   database: db_sync
-  host: localhost
-  port: 5430
+  host: db #localhost
+  port: 5432 #5430
   username: postgres
   password: mysecretpassword
 
 test:
   <<: *default
   database: db_sync_test
-  host: localhost
-  port: 5430
+  host: db
+  port: 5432
   username: postgres
   password: mysecretpassword
 
 production:
   <<: *default
   database: your_database_name_production
-  host: localhost
-  port: 5430
+  host: db
+  port: 5432
   username: postgres
   password: mysecretpassword

@@ -78,3 +78,11 @@ end
 gem "pg", "~> 1.1"
 gem 'jwt', '~> 2.2'
 gem 'devise'
+gem 'ransack'
+gem 'kaminari'
+gem 'active_model_serializers', '~> 0.10.0'
+
+gem 'rack-cors'
+
+gem 'state_machines-activerecord'
+gem 'state_machines-activemodel'

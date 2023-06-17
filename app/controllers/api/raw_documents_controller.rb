@@ -1,3 +1,3 @@
-class Api::RawDocumentsController < ApplicationController
-	
+class Api::RawDocumentsController < ApiController
+
 end
